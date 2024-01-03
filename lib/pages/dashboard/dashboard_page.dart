@@ -7,29 +7,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class DashboardPage extends StatelessWidget {
+class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const DashboardFull();
-  }
-}
-
-class DashboardFull extends StatefulWidget {
-  const DashboardFull({super.key});
 
   @override
   State<StatefulWidget> createState() => _DashboardFull();
 }
 
-class _DashboardFull extends State<DashboardFull> {
+class _DashboardFull extends State<DashboardPage> {
   int _selectedIndex = 0;
+  bool _isLoading = false;
 
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
-
-  bool _isLoading = false;
 
   Akun akun = Akun(
     uid: '',
@@ -40,7 +30,7 @@ class _DashboardFull extends State<DashboardFull> {
     role: '',
   );
 
-  void getAkun() async {
+  void getAkun(context) async {
     setState(() {
       _isLoading = true;
     });
@@ -48,11 +38,10 @@ class _DashboardFull extends State<DashboardFull> {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await _firestore
           .collection('akun')
           .where('uid', isEqualTo: _auth.currentUser!.uid)
-          .limit(1)
           .get();
 
       if (querySnapshot.docs.isNotEmpty) {
-        var userData = querySnapshot.docs.first.data() as Map<String, dynamic>;
+        var userData = querySnapshot.docs.first.data();
 
         setState(() {
           akun = Akun(
@@ -86,7 +75,7 @@ class _DashboardFull extends State<DashboardFull> {
   @override
   void initState() {
     super.initState();
-    getAkun();
+    getAkun(context);
   }
 
   @override
@@ -101,9 +90,7 @@ class _DashboardFull extends State<DashboardFull> {
         backgroundColor: primaryColor,
         child: const Icon(Icons.add, size: 35),
         onPressed: () {
-          Navigator.pushNamed(context, '/add', arguments: {
-            'akun': akun,
-          });
+          Navigator.pushNamed(context, '/add', arguments: {'akun': akun});
         },
       ),
       appBar: AppBar(

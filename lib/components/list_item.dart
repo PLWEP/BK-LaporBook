@@ -10,11 +10,12 @@ class ListItem extends StatefulWidget {
   final Laporan laporan;
   final Akun akun;
   final bool isLaporanku;
-  const ListItem(
-      {super.key,
-      required this.laporan,
-      required this.akun,
-      required this.isLaporanku});
+  const ListItem({
+    super.key,
+    required this.laporan,
+    required this.akun,
+    required this.isLaporanku,
+  });
 
   @override
   State<ListItem> createState() => _ListItemState();
@@ -24,7 +25,7 @@ class _ListItemState extends State<ListItem> {
   final _firestore = FirebaseFirestore.instance;
   final _storage = FirebaseStorage.instance;
 
-  void deleteLaporan() async {
+  void deleteLaporan(context) async {
     try {
       await _firestore.collection('laporan').doc(widget.laporan.docId).delete();
 
@@ -54,26 +55,27 @@ class _ListItemState extends State<ListItem> {
         onLongPress: () {
           if (widget.isLaporanku) {
             showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text('Delete ${widget.laporan.judul}?'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Batal'),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          deleteLaporan();
-                        },
-                        child: const Text('Hapus'),
-                      ),
-                    ],
-                  );
-                });
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Delete ${widget.laporan.judul}?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Batal'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        deleteLaporan(context);
+                      },
+                      child: const Text('Hapus'),
+                    ),
+                  ],
+                );
+              },
+            );
           }
         },
         child: Column(
@@ -105,13 +107,15 @@ class _ListItemState extends State<ListItem> {
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 8),
-                    decoration: BoxDecoration(
-                        color: warningColor,
-                        borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(5),
-                        ),
-                        border: const Border.symmetric(
-                            vertical: BorderSide(width: 1))),
+                    decoration: const BoxDecoration(
+                      color: warningColor,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(5),
+                      ),
+                      border: Border.symmetric(
+                        vertical: BorderSide(width: 1),
+                      ),
+                    ),
                     alignment: Alignment.center,
                     child: Text(
                       widget.laporan.status,
@@ -122,12 +126,14 @@ class _ListItemState extends State<ListItem> {
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 8),
-                    decoration: BoxDecoration(
-                        color: primaryColor,
-                        borderRadius: const BorderRadius.only(
-                            bottomRight: Radius.circular(5)),
-                        border: const Border.symmetric(
-                            vertical: BorderSide(width: 1))),
+                    decoration: const BoxDecoration(
+                      color: primaryColor,
+                      borderRadius:
+                          BorderRadius.only(bottomRight: Radius.circular(5)),
+                      border: Border.symmetric(
+                        vertical: BorderSide(width: 1),
+                      ),
+                    ),
                     alignment: Alignment.center,
                     child: Text(
                       DateFormat('dd/MM/yyyy').format(widget.laporan.tanggal),

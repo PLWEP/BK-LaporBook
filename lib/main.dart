@@ -14,16 +14,18 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MaterialApp(
-    title: 'Lapor Book',
-    initialRoute: '/',
-    routes: {
-      '/': (context) => const SplashPage(),
-      '/login': (context) => const LoginPage(),
-      '/register': (context) => const RegisterPage(),
-      '/dashboard': (context) => const DashboardPage(),
-      '/add': (context) => const AddFormPage(),
-      '/detail': (context) => const DetailPage(),
-    },
-  ));
+  runApp(
+    MaterialApp(
+      title: 'Lapor Book',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const SplashPage(),
+        '/login': (context) => const LoginPage(),
+        '/register': (context) => const RegisterPage(),
+        '/dashboard': (context) => const DashboardPage(),
+        '/add': (context) => const AddFormPage(),
+        '/detail': (context) => const DetailPage(),
+      },
+    ),
+  );
 }

@@ -25,7 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  void register() async {
+  void register(context) async {
     setState(() {
       _isLoading = true;
     });
@@ -145,7 +145,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     style: headerStyle(level: 2)),
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
-                                    register();
+                                    register(context);
                                   }
                                 },
                               ),
@@ -163,8 +163,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           onTap: () {
                             Navigator.pushNamed(context, '/login');
                           },
-                          child: const Text('Login di sini',
-                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          child: const Text(
+                            'Login di sini',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         )
                       ],
                     ),

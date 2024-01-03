@@ -43,39 +43,40 @@ class AddFormState extends State<AddFormPage> {
 
   Future<dynamic> uploadDialog(BuildContext context) {
     return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Pilih sumber '),
-            actions: [
-              TextButton(
-                onPressed: () async {
-                  XFile? upload =
-                      await picker.pickImage(source: ImageSource.camera);
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Pilih sumber '),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                XFile? upload =
+                    await picker.pickImage(source: ImageSource.camera);
 
-                  setState(() {
-                    file = upload;
-                  });
+                setState(() {
+                  file = upload;
+                });
 
-                  Navigator.of(context).pop();
-                },
-                child: const Icon(Icons.camera_alt),
-              ),
-              TextButton(
-                onPressed: () async {
-                  XFile? upload =
-                      await picker.pickImage(source: ImageSource.gallery);
-                  setState(() {
-                    file = upload;
-                  });
+                Navigator.of(context).pop();
+              },
+              child: const Icon(Icons.camera_alt),
+            ),
+            TextButton(
+              onPressed: () async {
+                XFile? upload =
+                    await picker.pickImage(source: ImageSource.gallery);
+                setState(() {
+                  file = upload;
+                });
 
-                  Navigator.of(context).pop();
-                },
-                child: const Icon(Icons.photo_library),
-              ),
-            ],
-          );
-        });
+                Navigator.of(context).pop();
+              },
+              child: const Icon(Icons.photo_library),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<Position> getCurrentLocation() async {
@@ -119,7 +120,7 @@ class AddFormState extends State<AddFormPage> {
     }
   }
 
-  void addTransaksi(Akun akun) async {
+  void addTransaksi(Akun akun, context) async {
     setState(() {
       _isLoading = true;
     });
@@ -171,8 +172,10 @@ class AddFormState extends State<AddFormPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
-        title:
-            Text('Tambah Laporan', style: headerStyle(level: 3, dark: false)),
+        title: Text(
+          'Tambah Laporan',
+          style: headerStyle(level: 3, dark: false),
+        ),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -187,14 +190,17 @@ class AddFormState extends State<AddFormPage> {
                     child: Column(
                       children: [
                         InputWidget(
-                            label: 'Judul Laporan',
-                            inputField: TextFormField(
-                                onChanged: (String value) => setState(() {
-                                      judul = value;
-                                    }),
-                                validator: notEmptyValidator,
-                                decoration:
-                                    customInputDecoration("Judul laporan"))),
+                          label: 'Judul Laporan',
+                          inputField: TextFormField(
+                            onChanged: (String value) => setState(
+                              () {
+                                judul = value;
+                              },
+                            ),
+                            validator: notEmptyValidator,
+                            decoration: customInputDecoration("Judul laporan"),
+                          ),
+                        ),
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 10),
                         ),
@@ -211,8 +217,10 @@ class AddFormState extends State<AddFormPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Icon(Icons.photo_camera),
-                                Text(' Foto Pendukung',
-                                    style: headerStyle(level: 3)),
+                                Text(
+                                  ' Foto Pendukung',
+                                  style: headerStyle(level: 3),
+                                ),
                               ],
                             ),
                           ),
@@ -222,11 +230,9 @@ class AddFormState extends State<AddFormPage> {
                           inputField: DropdownButtonFormField<String>(
                             decoration: customInputDecoration('Instansi'),
                             items: const [],
-                            onChanged: (selected) {
-                              setState(() {
-                                instansi = selected;
-                              });
-                            },
+                            onChanged: (selected) => setState(() {
+                              instansi = selected;
+                            }),
                           ),
                         ),
                         InputWidget(
@@ -237,11 +243,9 @@ class AddFormState extends State<AddFormPage> {
                               return DropdownMenuItem<String>(
                                   value: e, child: Text(e));
                             }).toList(),
-                            onChanged: (selected) {
-                              setState(() {
-                                instansi = selected;
-                              });
-                            },
+                            onChanged: (selected) => setState(() {
+                              instansi = selected;
+                            }),
                           ),
                         ),
                         InputWidget(
@@ -263,7 +267,7 @@ class AddFormState extends State<AddFormPage> {
                           child: FilledButton(
                             style: buttonStyle,
                             onPressed: () {
-                              addTransaksi(akun);
+                              addTransaksi(akun, context);
                             },
                             child: Text(
                               'Kirim Laporan',

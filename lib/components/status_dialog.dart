@@ -19,7 +19,7 @@ class _StatusDialogState extends State<StatusDialog> {
   late String status;
   final _firestore = FirebaseFirestore.instance;
 
-  void updateStatus() async {
+  void updateStatus(context) async {
     CollectionReference transaksiCollection = _firestore.collection('laporan');
     try {
       await transaksiCollection.doc(widget.laporan.docId).update({
@@ -54,7 +54,10 @@ class _StatusDialogState extends State<StatusDialog> {
           children: <Widget>[
             Text(
               widget.laporan.judul,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 20),
             RadioListTile<String>(
@@ -90,7 +93,7 @@ class _StatusDialogState extends State<StatusDialog> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                updateStatus();
+                updateStatus(context);
               },
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white,

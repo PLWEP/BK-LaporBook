@@ -20,7 +20,7 @@ class LoginPageState extends State<LoginPage> {
   String? email;
   String? password;
 
-  void login() async {
+  void login(context) async {
     setState(() {
       _isLoading = true;
     });
@@ -30,7 +30,10 @@ class LoginPageState extends State<LoginPage> {
           email: email!, password: password!);
 
       Navigator.pushNamedAndRemoveUntil(
-          context, '/dashboard', ModalRoute.withName('/dashboard'));
+        context,
+        '/dashboard',
+        ModalRoute.withName('/dashboard'),
+      );
     } catch (e) {
       final snackbar = SnackBar(content: Text(e.toString()));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
@@ -96,7 +99,7 @@ class LoginPageState extends State<LoginPage> {
                                     style: headerStyle(level: 3, dark: false)),
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
-                                    login();
+                                    login(context);
                                   }
                                 },
                               ),

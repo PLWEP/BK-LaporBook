@@ -12,7 +12,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final _auth = FirebaseAuth.instance;
-  void keluar(BuildContext context) async {
+  void keluar(context) async {
     await _auth.signOut();
     Navigator.pushNamedAndRemoveUntil(
         context, '/login', ModalRoute.withName('/login'));

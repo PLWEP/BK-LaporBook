@@ -16,7 +16,7 @@ class _AllLaporanState extends State<AllLaporan> {
   final _firestore = FirebaseFirestore.instance;
 
   List<Laporan> listLaporan = [];
-  void getTransaksi() async {
+  void getTransaksi(context) async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await _firestore.collection('laporan').get();
@@ -58,7 +58,7 @@ class _AllLaporanState extends State<AllLaporan> {
 
   @override
   Widget build(BuildContext context) {
-    getTransaksi();
+    getTransaksi(context);
     return SafeArea(
       child: Container(
         width: double.infinity,
