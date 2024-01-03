@@ -6,7 +6,7 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SplashFull();
+    return const SplashFull();
   }
 }
 
@@ -21,29 +21,19 @@ class _SplashPage extends State<SplashFull> {
   @override
   void initState() {
     super.initState();
-    final _auth = FirebaseAuth.instance;
+    final auth = FirebaseAuth.instance;
 
-    @override
-    void initState() {
-      super.initState();
+    User? user = auth.currentUser;
 
-      User? user = _auth.currentUser;
-
-      if (user != null) {
-        Future.delayed(Duration.zero, () {
-          // buat dashboard terlebih dahulu, lalu hapus komen line code dibawah ini
-          //  Navigator.pushReplacementNamed(context, '/dashboard');
-        });
-      } else {
-        Future.delayed(Duration.zero, () {
-          Navigator.pushReplacementNamed(context, '/login');
-        });
-      }
+    if (user != null) {
+      Future.delayed(Duration.zero, () {
+        Navigator.pushReplacementNamed(context, '/dashboard');
+      });
+    } else {
+      Future.delayed(Duration.zero, () {
+        Navigator.pushReplacementNamed(context, '/login');
+      });
     }
-
-    Future.delayed(Duration.zero, () {
-      Navigator.pushReplacementNamed(context, '/register');
-    });
   }
 
   @override
