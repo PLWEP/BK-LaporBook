@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:bk_lapor_book/components/input_widget.dart';
@@ -40,7 +42,7 @@ class AddFormState extends State<AddFormPage> {
     }
   }
 
-  Future<dynamic> uploadDialog(BuildContext context) {
+  Future<dynamic> uploadDialog() {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -204,16 +206,13 @@ class AddFormState extends State<AddFormPage> {
                         ),
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 10),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(vertical: 10),
                           child: imagePreview(),
                         ),
                         Container(
                           width: double.infinity,
                           margin: const EdgeInsets.only(bottom: 10),
                           child: ElevatedButton(
-                            onPressed: () => uploadDialog(context),
+                            onPressed: () => uploadDialog(),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
