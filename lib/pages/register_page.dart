@@ -22,10 +22,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final TextEditingController _password = TextEditingController();
 
-  void initState() {
-    super.initState();
-  }
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
@@ -55,7 +51,6 @@ class _RegisterPageState extends State<RegisterPage> {
     } catch (e) {
       final snackbar = SnackBar(content: Text(e.toString()));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
-      print(e);
     } finally {
       setState(() {
         _isLoading = false;
@@ -75,22 +70,19 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 80),
+                    const SizedBox(height: 80),
                     Text('Register', style: headerStyle(level: 1)),
-                    Container(
-                      child: const Text(
-                        'Create your profile to start your journey',
-                        style: TextStyle(color: Colors.grey),
-                      ),
+                    const Text(
+                      'Create your profile to start your journey',
+                      style: TextStyle(color: Colors.grey),
                     ),
-                    SizedBox(height: 50),
+                    const SizedBox(height: 50),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 30),
+                      margin: const EdgeInsets.symmetric(horizontal: 30),
                       child: Form(
                         key: _formKey,
                         child: Column(
                           children: [
-                            // di sini nanti komponen inputnya
                             InputLayout(
                               'Nama',
                               TextFormField(
@@ -142,7 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   decoration: customInputDecoration("")),
                             ),
                             Container(
-                              margin: EdgeInsets.only(top: 20),
+                              margin: const EdgeInsets.only(top: 20),
                               width: double.infinity,
                               child: FilledButton(
                                 style: buttonStyle,
