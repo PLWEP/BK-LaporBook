@@ -7,11 +7,12 @@ class StatusDialog extends StatefulWidget {
   final Laporan laporan;
 
   const StatusDialog({
+    super.key,
     required this.laporan,
   });
 
   @override
-  _StatusDialogState createState() => _StatusDialogState();
+  State<StatusDialog> createState() => _StatusDialogState();
 }
 
 class _StatusDialogState extends State<StatusDialog> {
@@ -26,7 +27,8 @@ class _StatusDialogState extends State<StatusDialog> {
       });
       Navigator.popAndPushNamed(context, '/dashboard');
     } catch (e) {
-      print(e);
+      final snackbar = SnackBar(content: Text(e.toString()));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
     }
   }
 
@@ -42,7 +44,7 @@ class _StatusDialogState extends State<StatusDialog> {
       backgroundColor: primaryColor,
       content: Container(
         width: MediaQuery.of(context).size.width * 0.8,
-        padding: EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -52,9 +54,9 @@ class _StatusDialogState extends State<StatusDialog> {
           children: <Widget>[
             Text(
               widget.laporan.judul,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             RadioListTile<String>(
               title: const Text('Posted'),
               value: 'Posted',
@@ -88,7 +90,6 @@ class _StatusDialogState extends State<StatusDialog> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                print(status);
                 updateStatus();
               },
               style: TextButton.styleFrom(
@@ -98,7 +99,7 @@ class _StatusDialogState extends State<StatusDialog> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: Text('Simpan Status'),
+              child: const Text('Simpan Status'),
             ),
           ],
         ),

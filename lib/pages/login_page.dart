@@ -63,44 +63,47 @@ class LoginPageState extends State<LoginPage> {
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 30),
                       child: Form(
-                          key: _formKey,
-                          child: Column(
-                            children: [
-                              InputLayout(
-                                  'Email',
-                                  TextFormField(
-                                      onChanged: (String value) => setState(() {
-                                            email = value;
-                                          }),
-                                      validator: notEmptyValidator,
-                                      decoration: customInputDecoration(
-                                          "email@email.com"))),
-                              InputLayout(
-                                  'Password',
-                                  TextFormField(
-                                      onChanged: (String value) => setState(() {
-                                            password = value;
-                                          }),
-                                      validator: notEmptyValidator,
-                                      obscureText: true,
-                                      decoration: customInputDecoration(""))),
-                              Container(
-                                margin: const EdgeInsets.only(top: 20),
-                                width: double.infinity,
-                                child: FilledButton(
-                                  style: buttonStyle,
-                                  child: Text('Login',
-                                      style:
-                                          headerStyle(level: 3, dark: false)),
-                                  onPressed: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      login();
-                                    }
-                                  },
-                                ),
-                              )
-                            ],
-                          )),
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            InputWidget(
+                              label: 'Email',
+                              inputField: TextFormField(
+                                onChanged: (String value) => setState(() {
+                                  email = value;
+                                }),
+                                validator: notEmptyValidator,
+                                decoration: customInputDecoration("Email"),
+                              ),
+                            ),
+                            InputWidget(
+                              label: 'Password',
+                              inputField: TextFormField(
+                                onChanged: (String value) => setState(() {
+                                  password = value;
+                                }),
+                                validator: notEmptyValidator,
+                                obscureText: true,
+                                decoration: customInputDecoration("Password"),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(top: 20),
+                              width: double.infinity,
+                              child: FilledButton(
+                                style: buttonStyle,
+                                child: Text('Login',
+                                    style: headerStyle(level: 3, dark: false)),
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    login();
+                                  }
+                                },
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 10),
                     Row(
@@ -110,9 +113,11 @@ class LoginPageState extends State<LoginPage> {
                         InkWell(
                           onTap: () =>
                               Navigator.pushNamed(context, '/register'),
-                          child: const Text('Daftar di sini',
-                              style: TextStyle(fontWeight: FontWeight.bold)),
-                        )
+                          child: const Text(
+                            'Daftar di sini',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ],
                     )
                   ],

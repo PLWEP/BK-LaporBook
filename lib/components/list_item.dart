@@ -10,7 +10,7 @@ class ListItem extends StatefulWidget {
   final Laporan laporan;
   final Akun akun;
   final bool isLaporanku;
-  ListItem(
+  const ListItem(
       {super.key,
       required this.laporan,
       required this.akun,
@@ -28,17 +28,16 @@ class _ListItemState extends State<ListItem> {
     try {
       await _firestore.collection('laporan').doc(widget.laporan.docId).delete();
 
-      // menghapus gambar dari storage
       if (widget.laporan.gambar != '') {
         await _storage.refFromURL(widget.laporan.gambar!).delete();
       }
       Navigator.popAndPushNamed(context, '/dashboard');
     } catch (e) {
-      print(e);
+      final snackbar = SnackBar(content: Text(e.toString()));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
     }
   }
 
-  // kodingan sebelumnya
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,7 +55,7 @@ class _ListItemState extends State<ListItem> {
           if (widget.isLaporanku) {
             showDialog(
                 context: context,
-                builder: (BuildContext) {
+                builder: (BuildContext context) {
                   return AlertDialog(
                     title: Text('Delete ${widget.laporan.judul}?'),
                     actions: [
@@ -64,13 +63,13 @@ class _ListItemState extends State<ListItem> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text('Batal'),
+                        child: const Text('Batal'),
                       ),
                       TextButton(
                         onPressed: () {
                           deleteLaporan();
                         },
-                        child: Text('Hapus'),
+                        child: const Text('Hapus'),
                       ),
                     ],
                   );

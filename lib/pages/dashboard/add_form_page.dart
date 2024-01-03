@@ -9,11 +9,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddFormPage extends StatefulWidget {
+  const AddFormPage({super.key});
+
   @override
   State<StatefulWidget> createState() => AddFormState();
 }
@@ -43,9 +44,9 @@ class AddFormState extends State<AddFormPage> {
   Future<dynamic> uploadDialog(BuildContext context) {
     return showDialog(
         context: context,
-        builder: (BuildContext) {
+        builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Pilih sumber '),
+            title: const Text('Pilih sumber '),
             actions: [
               TextButton(
                 onPressed: () async {
@@ -125,7 +126,6 @@ class AddFormState extends State<AddFormPage> {
     try {
       CollectionReference laporanCollection = _firestore.collection('laporan');
 
-      // Convert DateTime to Firestore Timestamp
       Timestamp timestamp = Timestamp.fromDate(DateTime.now());
 
       String url = await uploadImage();
@@ -145,7 +145,7 @@ class AddFormState extends State<AddFormPage> {
         'deskripsi': deskripsi,
         'gambar': url,
         'nama': akun.nama,
-        'status': 'Posted', // posted, process, done
+        'status': 'Posted',
         'tanggal': timestamp,
         'maps': maps,
       }).catchError((e) {
@@ -183,12 +183,12 @@ class AddFormState extends State<AddFormPage> {
             : SingleChildScrollView(
                 child: Form(
                   child: Container(
-                    margin: EdgeInsets.all(40),
+                    margin: const EdgeInsets.all(40),
                     child: Column(
                       children: [
-                        InputLayout(
-                            'Judul Laporan',
-                            TextFormField(
+                        InputWidget(
+                            label: 'Judul Laporan',
+                            inputField: TextFormField(
                                 onChanged: (String value) => setState(() {
                                       judul = value;
                                     }),
@@ -196,91 +196,80 @@ class AddFormState extends State<AddFormPage> {
                                 decoration:
                                     customInputDecoration("Judul laporan"))),
                         Container(
-                          margin: EdgeInsets.symmetric(vertical: 10),
+                          margin: const EdgeInsets.symmetric(vertical: 10),
                         ),
                         Container(
-                          width: double.infinity,
-                          margin: EdgeInsets.only(bottom: 10),
-                          child: ElevatedButton(
-                              onPressed: () {},
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.photo_camera),
-                                  Text(' Foto Pendukung',
-                                      style: headerStyle(level: 3)),
-                                ],
-                              )),
-                        ),
-                        InputLayout(
-                            'Instansi',
-                            DropdownButtonFormField<String>(
-                                decoration: customInputDecoration('Instansi'),
-                                items: [],
-                                onChanged: (selected) {
-                                  setState(() {
-                                    instansi = selected;
-                                  });
-                                })),
-                        //... kodingan sebelumnya
-                        InputLayout(
-                            'Instansi',
-                            DropdownButtonFormField<String>(
-                                decoration: customInputDecoration('Instansi'),
-                                items: dataInstansi.map((e) {
-                                  return DropdownMenuItem<String>(
-                                      child: Text(e), value: e);
-                                }).toList(),
-                                onChanged: (selected) {
-                                  setState(() {
-                                    instansi = selected;
-                                  });
-                                })),
-                        InputLayout(
-                            "Deskripsi laporan",
-                            TextFormField(
-                              onChanged: (String value) => setState(() {
-                                deskripsi = value;
-                              }),
-                              keyboardType: TextInputType.multiline,
-                              minLines: 3,
-                              maxLines: 5,
-                              decoration: customInputDecoration(
-                                  'Deskripsikan semua di sini'),
-                            )),
-                        SizedBox(height: 30),
-                        Container(
-                          width: double.infinity,
-                          child: FilledButton(
-                              style: buttonStyle,
-                              onPressed: () {
-                                addTransaksi(akun);
-                              },
-                              child: Text(
-                                'Kirim Laporan',
-                                style: headerStyle(level: 3, dark: false),
-                              )),
-                        ),
-                        //kodingan sebelumnya
-                        Container(
-                          margin: EdgeInsets.symmetric(vertical: 10),
+                          margin: const EdgeInsets.symmetric(vertical: 10),
                           child: imagePreview(),
                         ),
                         Container(
                           width: double.infinity,
-                          margin: EdgeInsets.only(bottom: 10),
+                          margin: const EdgeInsets.only(bottom: 10),
                           child: ElevatedButton(
-                              onPressed: () {
-                                uploadDialog(context);
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.photo_camera),
-                                  Text(' Foto Pendukung',
-                                      style: headerStyle(level: 3)),
-                                ],
-                              )),
+                            onPressed: () {},
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.photo_camera),
+                                Text(' Foto Pendukung',
+                                    style: headerStyle(level: 3)),
+                              ],
+                            ),
+                          ),
+                        ),
+                        InputWidget(
+                          label: 'Instansi',
+                          inputField: DropdownButtonFormField<String>(
+                            decoration: customInputDecoration('Instansi'),
+                            items: const [],
+                            onChanged: (selected) {
+                              setState(() {
+                                instansi = selected;
+                              });
+                            },
+                          ),
+                        ),
+                        InputWidget(
+                          label: 'Instansi',
+                          inputField: DropdownButtonFormField<String>(
+                            decoration: customInputDecoration('Instansi'),
+                            items: dataInstansi.map((e) {
+                              return DropdownMenuItem<String>(
+                                  value: e, child: Text(e));
+                            }).toList(),
+                            onChanged: (selected) {
+                              setState(() {
+                                instansi = selected;
+                              });
+                            },
+                          ),
+                        ),
+                        InputWidget(
+                          label: "Deskripsi laporan",
+                          inputField: TextFormField(
+                            onChanged: (String value) => setState(() {
+                              deskripsi = value;
+                            }),
+                            keyboardType: TextInputType.multiline,
+                            minLines: 3,
+                            maxLines: 5,
+                            decoration: customInputDecoration(
+                                'Deskripsikan semua di sini'),
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                        SizedBox(
+                          width: double.infinity,
+                          child: FilledButton(
+                            style: buttonStyle,
+                            onPressed: () {
+                              addTransaksi(akun);
+                            },
+                            child: Text(
+                              'Kirim Laporan',
+                              style: headerStyle(level: 3, dark: false),
+                            ),
+                          ),
                         ),
                       ],
                     ),

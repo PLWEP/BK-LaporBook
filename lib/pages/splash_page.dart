@@ -1,23 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class SplashPage extends StatelessWidget {
+class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const SplashFull();
-  }
-}
-
-class SplashFull extends StatefulWidget {
-  const SplashFull({super.key});
 
   @override
   State<StatefulWidget> createState() => _SplashPage();
 }
 
-class _SplashPage extends State<SplashFull> {
+class _SplashPage extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
@@ -39,10 +30,11 @@ class _SplashPage extends State<SplashFull> {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        home: Scaffold(
-      body: Center(
-        child: Text('Selamat datang di Aplikasi Laporan'),
+      home: Scaffold(
+        body: Center(
+          child: Text('Selamat datang di Aplikasi Laporan'),
+        ),
       ),
-    ));
+    );
   }
 }

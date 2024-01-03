@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 import 'styles.dart';
 
-class InputLayout extends StatelessWidget {
-  String label;
-  StatefulWidget inputField;
+InputDecoration customInputDecoration(String hintText, {Widget? suffixIcon}) {
+  return InputDecoration(
+    hintText: hintText,
+    suffixIcon: suffixIcon,
+    floatingLabelBehavior: FloatingLabelBehavior.never,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+  );
+}
 
-  InputLayout(
-    this.label,
-    this.inputField, {
+class InputWidget extends StatelessWidget {
+  final String label;
+  final StatefulWidget inputField;
+
+  const InputWidget({
     super.key,
+    required this.label,
+    required this.inputField,
   });
 
   @override
@@ -25,12 +36,4 @@ class InputLayout extends StatelessWidget {
       ],
     );
   }
-}
-
-InputDecoration customInputDecoration(String hintText, {Widget? suffixIcon}) {
-  return InputDecoration(
-      hintText: hintText,
-      suffixIcon: suffixIcon,
-      floatingLabelBehavior: FloatingLabelBehavior.never,
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)));
 }

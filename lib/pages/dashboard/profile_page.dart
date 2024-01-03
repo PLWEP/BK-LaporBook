@@ -23,77 +23,80 @@ class _ProfileState extends State<Profile> {
     return SafeArea(
       child: Container(
         width: double.infinity,
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 100,
             ),
             Text(
               widget.akun.nama,
-              style: TextStyle(
-                  color: primaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40),
+              style: const TextStyle(
+                color: primaryColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 40,
+              ),
             ),
             Text(
               widget.akun.role,
-              style: TextStyle(
-                  color: primaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20),
+              style: const TextStyle(
+                color: primaryColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Container(
               width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 10),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(color: primaryColor),
-                ), // Sudut border
+                ),
               ),
               child: Text(
                 widget.akun.noHP,
-                style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
+                style: const TextStyle(
+                  color: primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
             ),
             Container(
               width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 10),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(color: primaryColor),
-                ), // Sudut border
+                ),
               ),
               child: Text(
                 widget.akun.email,
-                style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
+                style: const TextStyle(
+                  color: primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
             ),
-            // Codingan tampilan email
-            SizedBox(
+            const SizedBox(
               height: 35,
             ),
-            Container(
+            SizedBox(
               width: double.infinity,
               child: FilledButton(
                 style: buttonStyle,
                 onPressed: () {
                   keluar(context);
                 },
-                child: Text('Logout',
+                child: const Text('Logout',
                     style: TextStyle(color: Colors.white, fontSize: 20)),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 35,
             ),
           ],

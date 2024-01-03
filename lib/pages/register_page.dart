@@ -73,7 +73,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(height: 80),
                     Text('Register', style: headerStyle(level: 1)),
                     const Text(
-                      'Create your profile to start your journey',
+                      'Create your profile to start using the app',
                       style: TextStyle(color: Colors.grey),
                     ),
                     const SizedBox(height: 50),
@@ -83,55 +83,58 @@ class _RegisterPageState extends State<RegisterPage> {
                         key: _formKey,
                         child: Column(
                           children: [
-                            InputLayout(
-                              'Nama',
-                              TextFormField(
+                            InputWidget(
+                              label: 'Nama',
+                              inputField: TextFormField(
                                 onChanged: (String value) => setState(() {
                                   nama = value;
                                 }),
                                 validator: notEmptyValidator,
-                                decoration:
-                                    customInputDecoration("Nama Lengkap"),
+                                decoration: customInputDecoration(
+                                    "Masukan Nama Lengkap"),
                               ),
                             ),
-                            InputLayout(
-                              'Email',
-                              TextFormField(
+                            InputWidget(
+                              label: 'Email',
+                              inputField: TextFormField(
                                 onChanged: (String value) => setState(() {
                                   email = value;
                                 }),
                                 validator: notEmptyValidator,
-                                decoration:
-                                    customInputDecoration("email@email.com"),
+                                decoration: customInputDecoration(
+                                    "Masukan Alamat Email"),
                               ),
                             ),
-                            InputLayout(
-                              'No. Handphone',
-                              TextFormField(
+                            InputWidget(
+                              label: 'No. Handphone',
+                              inputField: TextFormField(
                                 onChanged: (String value) => setState(() {
                                   noHP = value;
                                 }),
                                 validator: notEmptyValidator,
-                                decoration:
-                                    customInputDecoration("+62 80000000"),
+                                decoration: customInputDecoration(
+                                    "Masukan Nomor Handphone"),
                               ),
                             ),
-                            InputLayout(
-                              'Password',
-                              TextFormField(
-                                  controller: _password,
-                                  validator: notEmptyValidator,
-                                  obscureText: true,
-                                  decoration: customInputDecoration("")),
+                            InputWidget(
+                              label: 'Password',
+                              inputField: TextFormField(
+                                controller: _password,
+                                validator: notEmptyValidator,
+                                obscureText: true,
+                                decoration:
+                                    customInputDecoration("Masukan Password"),
+                              ),
                             ),
-                            InputLayout(
-                              'Konfirmasi Password',
-                              TextFormField(
-                                  validator: (value) =>
-                                      passConfirmationValidator(
-                                          value, _password),
-                                  obscureText: true,
-                                  decoration: customInputDecoration("")),
+                            InputWidget(
+                              label: 'Konfirmasi Password',
+                              inputField: TextFormField(
+                                validator: (value) =>
+                                    passConfirmationValidator(value, _password),
+                                obscureText: true,
+                                decoration: customInputDecoration(
+                                    "Masukan Konfirmasi Password"),
+                              ),
                             ),
                             Container(
                               margin: const EdgeInsets.only(top: 20),
@@ -164,7 +167,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
-                    )
+                    ),
+                    const SizedBox(height: 30),
                   ],
                 ),
               ),

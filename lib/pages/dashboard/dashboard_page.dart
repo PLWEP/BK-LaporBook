@@ -12,7 +12,7 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DashboardFull();
+    return const DashboardFull();
   }
 }
 
@@ -68,7 +68,6 @@ class _DashboardFull extends State<DashboardFull> {
     } catch (e) {
       final snackbar = SnackBar(content: Text(e.toString()));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
-      print(e);
     } finally {
       setState(() {
         _isLoading = false;
@@ -86,11 +85,11 @@ class _DashboardFull extends State<DashboardFull> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getAkun();
   }
 
+  @override
   Widget build(BuildContext context) {
     pages = <Widget>[
       AllLaporan(akun: akun),
@@ -98,17 +97,15 @@ class _DashboardFull extends State<DashboardFull> {
       Profile(akun: akun),
     ];
     return Scaffold(
-      // kode sebelumnya
       floatingActionButton: FloatingActionButton(
         backgroundColor: primaryColor,
-        child: Icon(Icons.add, size: 35),
+        child: const Icon(Icons.add, size: 35),
         onPressed: () {
           Navigator.pushNamed(context, '/add', arguments: {
             'akun': akun,
           });
         },
       ),
-      // kode sebelumnya,
       appBar: AppBar(
         backgroundColor: primaryColor,
         title: Text('Lapor Book', style: headerStyle(level: 2)),
