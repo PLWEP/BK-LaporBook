@@ -212,7 +212,7 @@ class AddFormState extends State<AddFormPage> {
                           width: double.infinity,
                           margin: const EdgeInsets.only(bottom: 10),
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () => uploadDialog(context),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -223,16 +223,6 @@ class AddFormState extends State<AddFormPage> {
                                 ),
                               ],
                             ),
-                          ),
-                        ),
-                        InputWidget(
-                          label: 'Instansi',
-                          inputField: DropdownButtonFormField<String>(
-                            decoration: customInputDecoration('Instansi'),
-                            items: const [],
-                            onChanged: (selected) => setState(() {
-                              instansi = selected;
-                            }),
                           ),
                         ),
                         InputWidget(

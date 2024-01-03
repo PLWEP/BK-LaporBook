@@ -85,46 +85,48 @@ class _DashboardFull extends State<DashboardPage> {
       MyLaporan(akun: akun),
       Profile(akun: akun),
     ];
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: primaryColor,
-        child: const Icon(Icons.add, size: 35),
-        onPressed: () {
-          Navigator.pushNamed(context, '/add', arguments: {'akun': akun});
-        },
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: primaryColor,
+          child: const Icon(Icons.add, size: 35),
+          onPressed: () {
+            Navigator.pushNamed(context, '/add', arguments: {'akun': akun});
+          },
+        ),
+        appBar: AppBar(
+          backgroundColor: primaryColor,
+          title: Text('Lapor Book', style: headerStyle(level: 2)),
+          centerTitle: true,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: primaryColor,
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          selectedItemColor: Colors.white,
+          selectedFontSize: 16,
+          unselectedItemColor: Colors.grey[800],
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.dashboard_outlined),
+              label: 'Semua',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.book_outlined),
+              label: 'Laporan Saya',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outlined),
+              label: 'Profile',
+            ),
+          ],
+        ),
+        body: _isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : pages.elementAt(_selectedIndex),
       ),
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        title: Text('Lapor Book', style: headerStyle(level: 2)),
-        centerTitle: true,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: primaryColor,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        selectedItemColor: Colors.white,
-        selectedFontSize: 16,
-        unselectedItemColor: Colors.grey[800],
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard_outlined),
-            label: 'Semua',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book_outlined),
-            label: 'Laporan Saya',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outlined),
-            label: 'Profile',
-          ),
-        ],
-      ),
-      body: _isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : pages.elementAt(_selectedIndex),
     );
   }
 }

@@ -14,8 +14,8 @@ class AllLaporan extends StatefulWidget {
 
 class _AllLaporanState extends State<AllLaporan> {
   final _firestore = FirebaseFirestore.instance;
-
   List<Laporan> listLaporan = [];
+
   void getTransaksi(context) async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
@@ -59,26 +59,24 @@ class _AllLaporanState extends State<AllLaporan> {
   @override
   Widget build(BuildContext context) {
     getTransaksi(context);
-    return SafeArea(
-      child: Container(
-        width: double.infinity,
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio: 1 / 1.234,
-          ),
-          itemCount: listLaporan.length,
-          itemBuilder: (context, index) {
-            return ListItem(
-              laporan: listLaporan[index],
-              akun: widget.akun,
-              isLaporanku: false,
-            );
-          },
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 1 / 1.234,
         ),
+        itemCount: listLaporan.length,
+        itemBuilder: (context, index) {
+          return ListItem(
+            laporan: listLaporan[index],
+            akun: widget.akun,
+            isLaporanku: false,
+          );
+        },
       ),
     );
   }

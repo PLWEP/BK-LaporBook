@@ -97,10 +97,10 @@ class _ListItemState extends State<ListItem> {
               padding: const EdgeInsets.symmetric(vertical: 10),
               decoration: const BoxDecoration(
                   border: Border.symmetric(horizontal: BorderSide(width: 2))),
-              child: Text(
-                widget.laporan.judul,
-                style: headerStyle(level: 4),
-              ),
+              // child: Text(
+              //   widget.laporan.judul,
+              //   style: headerStyle(level: 4),
+              // ),
             ),
             Row(
               children: [
@@ -108,37 +108,33 @@ class _ListItemState extends State<ListItem> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     decoration: const BoxDecoration(
-                      color: warningColor,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(5),
-                      ),
-                      border: Border.symmetric(
-                        vertical: BorderSide(width: 1),
-                      ),
-                    ),
+                        color: warningColor,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(5),
+                        ),
+                        border:
+                            Border.symmetric(vertical: BorderSide(width: 1))),
                     alignment: Alignment.center,
-                    child: Text(
-                      widget.laporan.status,
-                      style: headerStyle(level: 5, dark: false),
-                    ),
+                    // child: Text(
+                    //   widget.laporan.status,
+                    //   style: headerStyle(level: 5, dark: false),
+                    // ),
                   ),
                 ),
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     decoration: const BoxDecoration(
-                      color: primaryColor,
-                      borderRadius:
-                          BorderRadius.only(bottomRight: Radius.circular(5)),
-                      border: Border.symmetric(
-                        vertical: BorderSide(width: 1),
-                      ),
-                    ),
+                        color: primaryColor,
+                        borderRadius:
+                            BorderRadius.only(bottomRight: Radius.circular(5)),
+                        border:
+                            Border.symmetric(vertical: BorderSide(width: 1))),
                     alignment: Alignment.center,
-                    child: Text(
-                      DateFormat('dd/MM/yyyy').format(widget.laporan.tanggal),
-                      style: headerStyle(level: 5, dark: false),
-                    ),
+                    // child: Text(
+                    //   DateFormat('dd/MM/yyyy').format(widget.laporan.tanggal),
+                    //   style: headerStyle(level: 5, dark: false),
+                    // ),
                   ),
                 )
               ],
