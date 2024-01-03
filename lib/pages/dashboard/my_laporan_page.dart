@@ -1,8 +1,8 @@
 import 'package:bk_lapor_book/components/list_item.dart';
-import 'package:bk_lapor_book/models/akun.dart';
 import 'package:bk_lapor_book/models/laporan.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class MyLaporan extends StatefulWidget {
@@ -17,13 +17,11 @@ class _MyLaporanState extends State<MyLaporan> {
   final _firestore = FirebaseFirestore.instance;
 
   List<Laporan> listLaporan = [];
-  void getTransaksi(context) async {
+  void getTransaksi() async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await _firestore
           .collection('laporan')
-          .where('uid',
-              isEqualTo: _auth.currentUser!
-                  .uid) // kondisi untuk menccari laporan yang sesuai dengan akun yang telah login
+          .where('uid', isEqualTo: _auth.currentUser!.uid)
           .get();
 
       setState(() {
@@ -55,32 +53,42 @@ class _MyLaporanState extends State<MyLaporan> {
         }
       });
     } catch (e) {
-      final snackbar = SnackBar(content: Text(e.toString()));
-      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    listLaporan;
+    _auth;
+    _firestore;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    getTransaksi(context);
+    getTransaksi();
     return SafeArea(
       child: Container(
         width: double.infinity,
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: 1 / 1.234,
-            ),
-            itemCount: listLaporan.length,
-            itemBuilder: (context, index) {
-              return ListItem(
-                laporan: listLaporan[index],
-                isLaporanku: true,
-              );
-            }),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            childAspectRatio: 1 / 1.234,
+          ),
+          itemCount: listLaporan.length,
+          itemBuilder: (context, index) {
+            return ListItem(
+              laporan: listLaporan[index],
+              isLaporanku: true,
+            );
+          },
+        ),
       ),
     );
   }

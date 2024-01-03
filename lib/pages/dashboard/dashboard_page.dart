@@ -1,7 +1,5 @@
 import 'package:bk_lapor_book/components/styles.dart';
-import 'package:bk_lapor_book/pages/dashboard/all_laporan_page.dart';
-import 'package:bk_lapor_book/pages/dashboard/my_laporan_page.dart';
-import 'package:bk_lapor_book/pages/dashboard/profile_page.dart';
+import 'package:bk_lapor_book/components/vars.dart';
 
 import 'package:flutter/material.dart';
 
@@ -9,17 +7,11 @@ class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _DashboardFull();
+  State<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _DashboardFull extends State<DashboardPage> {
-  int _selectedIndex = 0;
-
-  List<Widget> pages = const <Widget>[
-    AllLaporan(),
-    MyLaporan(),
-    Profile(),
-  ];
+class _DashboardPageState extends State<DashboardPage> {
+  int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -47,7 +39,6 @@ class _DashboardFull extends State<DashboardPage> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         selectedItemColor: Colors.white,
-        selectedFontSize: 16,
         unselectedItemColor: Colors.grey[800],
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

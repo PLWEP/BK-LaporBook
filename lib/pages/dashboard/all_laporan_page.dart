@@ -1,7 +1,8 @@
 import 'package:bk_lapor_book/components/list_item.dart';
-import 'package:bk_lapor_book/models/akun.dart';
+
 import 'package:bk_lapor_book/models/laporan.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AllLaporan extends StatefulWidget {
@@ -50,9 +51,17 @@ class _AllLaporanState extends State<AllLaporan> {
         }
       });
     } catch (e) {
-      final snackbar = SnackBar(content: Text(e.toString()));
-      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      if (kDebugMode) {
+        print(e);
+      }
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    listLaporan;
+    _firestore;
   }
 
   @override

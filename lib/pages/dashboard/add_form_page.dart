@@ -4,7 +4,6 @@ import 'package:bk_lapor_book/components/input_widget.dart';
 import 'package:bk_lapor_book/components/styles.dart';
 import 'package:bk_lapor_book/components/validators.dart';
 import 'package:bk_lapor_book/components/vars.dart';
-import 'package:bk_lapor_book/models/akun.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
