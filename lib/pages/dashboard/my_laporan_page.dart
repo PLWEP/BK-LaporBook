@@ -6,8 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MyLaporan extends StatefulWidget {
-  final Akun akun;
-  const MyLaporan({super.key, required this.akun});
+  const MyLaporan({super.key});
 
   @override
   State<MyLaporan> createState() => _MyLaporanState();
@@ -79,7 +78,6 @@ class _MyLaporanState extends State<MyLaporan> {
             itemBuilder: (context, index) {
               return ListItem(
                 laporan: listLaporan[index],
-                akun: widget.akun,
                 isLaporanku: true,
               );
             }),

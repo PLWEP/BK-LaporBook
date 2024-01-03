@@ -7,7 +7,7 @@ const successColor = Color(0xFF2A9D8F);
 const greyColor = Color(0xFFAFAFAF);
 
 TextStyle headerStyle({int level = 1, bool dark = true}) {
-  List<double> levelSize = [30, 24, 20];
+  List<double> levelSize = [30, 24, 20, 18, 16, 12];
   return TextStyle(
     fontSize: levelSize[level - 1],
     fontWeight: FontWeight.bold,

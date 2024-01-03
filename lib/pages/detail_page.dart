@@ -2,6 +2,8 @@ import 'package:bk_lapor_book/components/status_dialog.dart';
 import 'package:bk_lapor_book/components/styles.dart';
 import 'package:bk_lapor_book/models/akun.dart';
 import 'package:bk_lapor_book/models/laporan.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -28,7 +30,45 @@ class _DetailPageState extends State<DetailPage> {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
     Laporan laporan = arguments['laporan'];
-    Akun akun = arguments['akun'];
+
+    final _firestore = FirebaseFirestore.instance;
+    final _auth = FirebaseAuth.instance;
+
+    Akun akun = Akun(
+      uid: '',
+      docId: '',
+      nama: '',
+      noHP: '',
+      email: '',
+      role: '',
+    );
+
+    void getAkun(context) async {
+      try {
+        QuerySnapshot<Map<String, dynamic>> querySnapshot = await _firestore
+            .collection('akun')
+            .where('uid', isEqualTo: _auth.currentUser!.uid)
+            .get();
+
+        if (querySnapshot.docs.isNotEmpty) {
+          var userData = querySnapshot.docs.first.data();
+
+          setState(() {
+            akun = Akun(
+              uid: userData['uid'],
+              nama: userData['nama'],
+              noHP: userData['noHP'],
+              email: userData['email'],
+              docId: userData['docId'],
+              role: userData['role'],
+            );
+          });
+        }
+      } catch (e) {
+        final snackbar = SnackBar(content: Text(e.toString()));
+        ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      }
+    }
 
     String? status;
 

@@ -120,11 +120,17 @@ class AddFormState extends State<AddFormPage> {
     }
   }
 
-  void addTransaksi(Akun akun, context) async {
+  void addTransaksi(context) async {
     setState(() {
       _isLoading = true;
     });
     try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await _firestore
+          .collection('akun')
+          .where('uid', isEqualTo: _auth.currentUser!.uid)
+          .get();
+
+      final userData = querySnapshot.docs.first.data();
       CollectionReference laporanCollection = _firestore.collection('laporan');
 
       Timestamp timestamp = Timestamp.fromDate(DateTime.now());
@@ -145,7 +151,7 @@ class AddFormState extends State<AddFormPage> {
         'instansi': instansi,
         'deskripsi': deskripsi,
         'gambar': url,
-        'nama': akun.nama,
+        'nama': userData['nama'],
         'status': 'Posted',
         'tanggal': timestamp,
         'maps': maps,
@@ -165,10 +171,6 @@ class AddFormState extends State<AddFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-
-    final Akun akun = arguments['akun'];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
@@ -257,7 +259,7 @@ class AddFormState extends State<AddFormPage> {
                           child: FilledButton(
                             style: buttonStyle,
                             onPressed: () {
-                              addTransaksi(akun, context);
+                              addTransaksi(context);
                             },
                             child: Text(
                               'Kirim Laporan',

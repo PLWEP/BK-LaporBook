@@ -5,8 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AllLaporan extends StatefulWidget {
-  final Akun akun;
-  const AllLaporan({super.key, required this.akun});
+  const AllLaporan({super.key});
 
   @override
   State<AllLaporan> createState() => _AllLaporanState();
@@ -73,7 +72,6 @@ class _AllLaporanState extends State<AllLaporan> {
         itemBuilder: (context, index) {
           return ListItem(
             laporan: listLaporan[index],
-            akun: widget.akun,
             isLaporanku: false,
           );
         },

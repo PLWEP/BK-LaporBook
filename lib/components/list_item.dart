@@ -1,5 +1,4 @@
 import 'package:bk_lapor_book/components/styles.dart';
-import 'package:bk_lapor_book/models/akun.dart';
 import 'package:bk_lapor_book/models/laporan.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,12 +7,11 @@ import 'package:intl/intl.dart';
 
 class ListItem extends StatefulWidget {
   final Laporan laporan;
-  final Akun akun;
+
   final bool isLaporanku;
   const ListItem({
     super.key,
     required this.laporan,
-    required this.akun,
     required this.isLaporanku,
   });
 
@@ -43,13 +41,13 @@ class _ListItemState extends State<ListItem> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(width: 2),
-          borderRadius: BorderRadius.circular(10)),
+        border: Border.all(width: 2),
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: InkWell(
         onTap: () {
           Navigator.pushNamed(context, '/detail', arguments: {
             'laporan': widget.laporan,
-            'akun': widget.akun,
           });
         },
         onLongPress: () {
@@ -80,63 +78,77 @@ class _ListItemState extends State<ListItem> {
         },
         child: Column(
           children: [
-            widget.laporan.gambar != ''
-                ? Image.network(
-                    widget.laporan.gambar!,
-                    width: 130,
-                    height: 130,
-                  )
-                : Image.asset(
-                    'assets/istock-default.jpg',
-                    width: 130,
-                    height: 130,
-                  ),
+            SizedBox(
+              width: double.infinity,
+              child: widget.laporan.gambar != ''
+                  ? Image.network(
+                      widget.laporan.gambar!,
+                      width: 130,
+                      height: 130,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.asset(
+                      'assets/istock-default.jpg',
+                      width: 130,
+                      height: 130,
+                      fit: BoxFit.cover,
+                    ),
+            ),
             Container(
               width: double.infinity,
               alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               decoration: const BoxDecoration(
-                  border: Border.symmetric(horizontal: BorderSide(width: 2))),
-              // child: Text(
-              //   widget.laporan.judul,
-              //   style: headerStyle(level: 4),
-              // ),
+                border: Border.symmetric(
+                  horizontal: BorderSide(width: 2),
+                ),
+              ),
+              child: Text(
+                widget.laporan.judul,
+                style: headerStyle(level: 4),
+              ),
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: const BoxDecoration(
-                        color: warningColor,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(5),
-                        ),
-                        border:
-                            Border.symmetric(vertical: BorderSide(width: 1))),
+                      color: warningColor,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(5),
+                      ),
+                      border: Border.symmetric(
+                        vertical: BorderSide(width: 1),
+                      ),
+                    ),
                     alignment: Alignment.center,
-                    // child: Text(
-                    //   widget.laporan.status,
-                    //   style: headerStyle(level: 5, dark: false),
-                    // ),
+                    child: Text(
+                      widget.laporan.status,
+                      style: headerStyle(level: 5, dark: false),
+                    ),
                   ),
                 ),
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.symmetric(vertical: 4),
                     decoration: const BoxDecoration(
-                        color: primaryColor,
-                        borderRadius:
-                            BorderRadius.only(bottomRight: Radius.circular(5)),
-                        border:
-                            Border.symmetric(vertical: BorderSide(width: 1))),
+                      color: warningColor,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(5),
+                      ),
+                      border: Border.symmetric(
+                        vertical: BorderSide(width: 1),
+                      ),
+                    ),
                     alignment: Alignment.center,
-                    // child: Text(
-                    //   DateFormat('dd/MM/yyyy').format(widget.laporan.tanggal),
-                    //   style: headerStyle(level: 5, dark: false),
-                    // ),
+                    child: Text(
+                      DateFormat.yM().format(widget.laporan.tanggal),
+                      style: headerStyle(level: 5, dark: false),
+                    ),
                   ),
-                )
+                ),
               ],
             )
           ],

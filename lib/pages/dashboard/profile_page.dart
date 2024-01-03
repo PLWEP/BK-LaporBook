@@ -1,21 +1,65 @@
 import 'package:bk_lapor_book/components/styles.dart';
 import 'package:bk_lapor_book/models/akun.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
-  final Akun akun;
-  const Profile({super.key, required this.akun});
+  const Profile({super.key});
   @override
   State<Profile> createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
+  final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
+
+  Akun akun = Akun(
+    uid: '',
+    docId: '',
+    nama: '',
+    noHP: '',
+    email: '',
+    role: '',
+  );
+
+  void getAkun(context) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await _firestore
+          .collection('akun')
+          .where('uid', isEqualTo: _auth.currentUser!.uid)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        var userData = querySnapshot.docs.first.data();
+
+        setState(() {
+          akun = Akun(
+            uid: userData['uid'],
+            nama: userData['nama'],
+            noHP: userData['noHP'],
+            email: userData['email'],
+            docId: userData['docId'],
+            role: userData['role'],
+          );
+        });
+      }
+    } catch (e) {
+      final snackbar = SnackBar(content: Text(e.toString()));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    }
+  }
+
   void keluar(context) async {
     await _auth.signOut();
     Navigator.pushNamedAndRemoveUntil(
         context, '/login', ModalRoute.withName('/login'));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getAkun(context);
   }
 
   @override
@@ -30,7 +74,7 @@ class _ProfileState extends State<Profile> {
               height: 100,
             ),
             Text(
-              widget.akun.nama,
+              akun.nama,
               style: const TextStyle(
                 color: primaryColor,
                 fontWeight: FontWeight.bold,
@@ -38,7 +82,7 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             Text(
-              widget.akun.role,
+              akun.role,
               style: const TextStyle(
                 color: primaryColor,
                 fontWeight: FontWeight.bold,
@@ -57,7 +101,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               child: Text(
-                widget.akun.noHP,
+                akun.noHP,
                 style: const TextStyle(
                   color: primaryColor,
                   fontWeight: FontWeight.bold,
@@ -74,7 +118,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               child: Text(
-                widget.akun.email,
+                akun.email,
                 style: const TextStyle(
                   color: primaryColor,
                   fontWeight: FontWeight.bold,
