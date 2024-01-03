@@ -1,4 +1,5 @@
 import 'package:bk_lapor_book/firebase_options.dart';
+import 'package:bk_lapor_book/pages/login_page.dart';
 import 'package:bk_lapor_book/pages/register_page.dart';
 import 'package:bk_lapor_book/pages/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,7 +16,7 @@ void main() async {
     initialRoute: '/',
     routes: {
       '/': (context) => const SplashPage(),
-      // '/login': (context) => LoginPage(),
+      '/login': (context) => LoginPage(),
       '/register': (context) => const RegisterPage(),
       // '/dashboard': (context) => const DashboardPage(),
       // '/add': (context) => AddFormPage(),
