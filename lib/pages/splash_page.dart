@@ -9,13 +9,11 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPage extends State<SplashPage> {
+  final auth = FirebaseAuth.instance;
   @override
   void initState() {
     super.initState();
-    final auth = FirebaseAuth.instance;
-
     User? user = auth.currentUser;
-
     if (user != null) {
       Future.delayed(Duration.zero, () {
         Navigator.pushReplacementNamed(context, '/dashboard');

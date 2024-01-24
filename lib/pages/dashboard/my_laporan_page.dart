@@ -33,6 +33,7 @@ class _MyLaporanState extends State<MyLaporan> {
             return Komentar(
               nama: map['nama'],
               isi: map['isi'],
+              waktu: map['waktu'],
             );
           }).toList();
           listLaporan.add(

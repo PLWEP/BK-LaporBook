@@ -30,9 +30,19 @@ class Laporan {
 class Komentar {
   final String nama;
   final String isi;
+  final DateTime waktu;
 
-  Komentar({
-    required this.nama,
-    required this.isi,
+  Komentar({required this.nama, required this.isi, required this.waktu});
+}
+
+class Like {
+  final DateTime waktu;
+  final String uid;
+  final String likeid;
+
+  Like({
+    required this.waktu,
+    required this.uid,
+    required this.likeid,
   });
 }
