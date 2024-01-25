@@ -4,7 +4,7 @@ import 'package:bk_lapor_book/pages/dashboard/my_laporan_page.dart';
 import 'package:bk_lapor_book/pages/dashboard/profile_page.dart';
 import 'package:flutter/material.dart';
 
-List<String> dataStatus = ['Posted', 'Proses', 'Selesai'];
+List<String> dataStatus = ['Posted', 'Proses', 'Done'];
 List<Color> warnaStatus = [warningColor, dangerColor, successColor];
 List<String> dataInstansi = [
   'Pembangunan',

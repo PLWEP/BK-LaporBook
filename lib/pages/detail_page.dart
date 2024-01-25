@@ -88,7 +88,7 @@ class _DetailPageState extends State<DetailPage> {
         return AlertDialog(
           backgroundColor: primaryColor,
           content: Container(
-            width: MediaQuery.of(context).size.width * 0.8,
+            width: MediaQuery.of(context).size.width * 0.9,
             padding: const EdgeInsets.symmetric(vertical: 10),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -96,7 +96,7 @@ class _DetailPageState extends State<DetailPage> {
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
+              children: [
                 Text(
                   laporan.judul,
                   style: const TextStyle(
@@ -126,7 +126,7 @@ class _DetailPageState extends State<DetailPage> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text('Tambah Komentar'),
+                  child: const Text('Posting Komentar'),
                 ),
               ],
             ),

@@ -140,9 +140,7 @@ class _ProfileState extends State<Profile> {
                     style: TextStyle(color: Colors.white, fontSize: 20)),
               ),
             ),
-            const SizedBox(
-              height: 35,
-            ),
+            const SizedBox(height: 35),
           ],
         ),
       ),

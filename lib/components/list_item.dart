@@ -1,11 +1,9 @@
 import 'package:bk_lapor_book/components/styles.dart';
 import 'package:bk_lapor_book/models/laporan.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class ListItem extends StatefulWidget {
+class ListItem extends StatelessWidget {
   final Laporan laporan;
 
   final bool isLaporanku;
@@ -14,28 +12,6 @@ class ListItem extends StatefulWidget {
     required this.laporan,
     required this.isLaporanku,
   });
-
-  @override
-  State<ListItem> createState() => _ListItemState();
-}
-
-class _ListItemState extends State<ListItem> {
-  final _firestore = FirebaseFirestore.instance;
-  final _storage = FirebaseStorage.instance;
-
-  void deleteLaporan(context) async {
-    try {
-      await _firestore.collection('laporan').doc(widget.laporan.docId).delete();
-
-      if (widget.laporan.gambar != '') {
-        await _storage.refFromURL(widget.laporan.gambar!).delete();
-      }
-      Navigator.popAndPushNamed(context, '/dashboard');
-    } catch (e) {
-      final snackbar = SnackBar(content: Text(e.toString()));
-      ScaffoldMessenger.of(context).showSnackBar(snackbar);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,16 +23,16 @@ class _ListItemState extends State<ListItem> {
       child: InkWell(
         onTap: () {
           Navigator.pushNamed(context, '/detail', arguments: {
-            'laporan': widget.laporan,
+            'laporan': laporan,
           });
         },
         child: Column(
           children: [
             SizedBox(
               width: double.infinity,
-              child: widget.laporan.gambar != ''
+              child: laporan.gambar != ''
                   ? Image.network(
-                      widget.laporan.gambar!,
+                      laporan.gambar!,
                       width: 130,
                       height: 130,
                       fit: BoxFit.cover,
@@ -78,7 +54,7 @@ class _ListItemState extends State<ListItem> {
                 ),
               ),
               child: Text(
-                widget.laporan.judul,
+                laporan.judul,
                 style: headerStyle(level: 4),
               ),
             ),
@@ -99,7 +75,7 @@ class _ListItemState extends State<ListItem> {
                     ),
                     alignment: Alignment.center,
                     child: Text(
-                      widget.laporan.status,
+                      laporan.status,
                       style: headerStyle(level: 5, dark: false),
                     ),
                   ),
@@ -118,7 +94,7 @@ class _ListItemState extends State<ListItem> {
                     ),
                     alignment: Alignment.center,
                     child: Text(
-                      DateFormat.yM().format(widget.laporan.tanggal),
+                      DateFormat.yM().format(laporan.tanggal),
                       style: headerStyle(level: 5, dark: false),
                     ),
                   ),

@@ -113,7 +113,7 @@ class AddFormState extends State<AddFormPage> {
       }).catchError((e) {
         throw e;
       });
-      Navigator.popAndPushNamed(context, '/dashboard');
+      Navigator.pop(context);
     } catch (e) {
       final snackbar = SnackBar(content: Text(e.toString()));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
@@ -179,8 +179,9 @@ class AddFormState extends State<AddFormPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Icon(Icons.photo_camera),
+                                const SizedBox(width: 10),
                                 Text(
-                                  ' Foto Pendukung',
+                                  'Foto Pendukung',
                                   style: headerStyle(level: 3),
                                 ),
                               ],

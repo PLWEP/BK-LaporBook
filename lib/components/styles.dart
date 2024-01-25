@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const primaryColor = Color(0xff37B5B6);
+const primaryColor = Color(0xffF3B95F);
 const warningColor = Color(0xFFD04848);
 const dangerColor = Color(0xFFF3B95F);
 const successColor = Color(0xFF96E9C6);
