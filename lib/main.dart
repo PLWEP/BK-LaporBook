@@ -3,6 +3,7 @@ import 'package:bk_lapor_book/pages/dashboard/add_form_page.dart';
 import 'package:bk_lapor_book/pages/dashboard/dashboard_page.dart';
 import 'package:bk_lapor_book/pages/detail_page.dart';
 import 'package:bk_lapor_book/pages/login_page.dart';
+import 'package:bk_lapor_book/pages/notconnect_page.dart';
 import 'package:bk_lapor_book/pages/register_page.dart';
 import 'package:bk_lapor_book/pages/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,6 +17,7 @@ void main() async {
 
   runApp(
     MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Lapor Book',
       initialRoute: '/',
       routes: {
@@ -25,6 +27,7 @@ void main() async {
         '/dashboard': (context) => const DashboardPage(),
         '/add': (context) => const AddFormPage(),
         '/detail': (context) => const DetailPage(),
+        '/notconnect': (context) => const NotConnectPage(),
       },
     ),
   );

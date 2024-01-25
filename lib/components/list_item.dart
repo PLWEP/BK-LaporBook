@@ -50,32 +50,6 @@ class _ListItemState extends State<ListItem> {
             'laporan': widget.laporan,
           });
         },
-        onLongPress: () {
-          if (widget.isLaporanku) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Delete ${widget.laporan.judul}?'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Batal'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        deleteLaporan(context);
-                      },
-                      child: const Text('Hapus'),
-                    ),
-                  ],
-                );
-              },
-            );
-          }
-        },
         child: Column(
           children: [
             SizedBox(

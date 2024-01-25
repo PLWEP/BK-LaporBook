@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-const primaryColor = Color(0xffF4A261);
-const warningColor = Color(0xFFE9C46A);
-const dangerColor = Color(0xFFE76F51);
-const successColor = Color(0xFF2A9D8F);
+const primaryColor = Color(0xff37B5B6);
+const warningColor = Color(0xFFD04848);
+const dangerColor = Color(0xFFF3B95F);
+const successColor = Color(0xFF96E9C6);
 const greyColor = Color(0xFFAFAFAF);
 
 TextStyle headerStyle({int level = 1, bool dark = true}) {

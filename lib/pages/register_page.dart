@@ -43,7 +43,7 @@ class _RegisterPageState extends State<RegisterPage> {
         'email': email,
         'noHP': noHP,
         'docId': docId,
-        'role': 'user',
+        'role': 'masyarakat',
       });
 
       Navigator.pushNamedAndRemoveUntil(
@@ -72,10 +72,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     const SizedBox(height: 80),
                     Text('Register', style: headerStyle(level: 1)),
-                    const Text(
-                      'Create your profile to start using the app',
-                      style: TextStyle(color: Colors.grey),
-                    ),
                     const SizedBox(height: 50),
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 30),
@@ -132,8 +128,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                 validator: (value) =>
                                     passConfirmationValidator(value, _password),
                                 obscureText: true,
-                                decoration: customInputDecoration(
-                                    "Masukan Konfirmasi Password"),
+                                decoration:
+                                    customInputDecoration("Masukan Password"),
                               ),
                             ),
                             Container(
@@ -158,13 +154,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('Sudah punya akun? '),
+                        const Text('Already have an account? '),
                         InkWell(
                           onTap: () {
                             Navigator.pushNamed(context, '/login');
                           },
                           child: const Text(
-                            'Login di sini',
+                            'Login',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),

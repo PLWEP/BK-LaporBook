@@ -6,7 +6,13 @@ import 'package:flutter/material.dart';
 
 List<String> dataStatus = ['Posted', 'Proses', 'Selesai'];
 List<Color> warnaStatus = [warningColor, dangerColor, successColor];
-List<String> dataInstansi = ['Pembangunan', 'Jalanan', 'Pendidikan'];
+List<String> dataInstansi = [
+  'Pembangunan',
+  'Jalanan',
+  'Pendidikan',
+  'Fasilitas Umum',
+  'Fasilitas Sosial',
+];
 List<Widget> pages = const <Widget>[
   AllLaporan(),
   MyLaporan(),

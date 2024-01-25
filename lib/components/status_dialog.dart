@@ -25,7 +25,8 @@ class _StatusDialogState extends State<StatusDialog> {
       await transaksiCollection.doc(widget.laporan.docId).update({
         'status': status,
       });
-      Navigator.popAndPushNamed(context, '/dashboard');
+      Navigator.pop(context);
+      Navigator.pop(context);
     } catch (e) {
       final snackbar = SnackBar(content: Text(e.toString()));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);

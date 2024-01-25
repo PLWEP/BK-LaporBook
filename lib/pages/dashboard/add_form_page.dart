@@ -34,52 +34,6 @@ class AddFormState extends State<AddFormPage> {
   ImagePicker picker = ImagePicker();
   XFile? file;
 
-  Image imagePreview() {
-    if (file == null) {
-      return Image.asset('assets/istock-default.jpg', width: 180, height: 180);
-    } else {
-      return Image.file(File(file!.path), width: 180, height: 180);
-    }
-  }
-
-  Future<dynamic> uploadDialog() {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Pilih sumber '),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                XFile? upload =
-                    await picker.pickImage(source: ImageSource.camera);
-
-                setState(() {
-                  file = upload;
-                });
-
-                Navigator.of(context).pop();
-              },
-              child: const Icon(Icons.camera_alt),
-            ),
-            TextButton(
-              onPressed: () async {
-                XFile? upload =
-                    await picker.pickImage(source: ImageSource.gallery);
-                setState(() {
-                  file = upload;
-                });
-
-                Navigator.of(context).pop();
-              },
-              child: const Icon(Icons.photo_library),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   Future<Position> getCurrentLocation() async {
     bool isServiceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!isServiceEnabled) {
@@ -204,15 +158,23 @@ class AddFormState extends State<AddFormPage> {
                             decoration: customInputDecoration("Judul laporan"),
                           ),
                         ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(vertical: 10),
-                          child: imagePreview(),
-                        ),
+                        if (file != null)
+                          Container(
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            child: Image.file(File(file!.path),
+                                width: 180, height: 180),
+                          ),
                         Container(
                           width: double.infinity,
                           margin: const EdgeInsets.only(bottom: 10),
                           child: ElevatedButton(
-                            onPressed: () => uploadDialog(),
+                            onPressed: () async {
+                              XFile? upload = await picker.pickImage(
+                                  source: ImageSource.camera);
+                              setState(() {
+                                file = upload;
+                              });
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -239,7 +201,7 @@ class AddFormState extends State<AddFormPage> {
                           ),
                         ),
                         InputWidget(
-                          label: "Deskripsi laporan",
+                          label: "Deskripsi Lengkap",
                           inputField: TextFormField(
                             onChanged: (String value) => setState(() {
                               deskripsi = value;

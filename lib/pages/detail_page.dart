@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:math';
 
 import 'package:bk_lapor_book/components/status_dialog.dart';
@@ -79,6 +81,61 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
+  void komentarDialog(Laporan laporan) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: primaryColor,
+          content: Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  laporan.judul,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: TextField(
+                    controller: commentController,
+                    decoration: const InputDecoration(
+                      hintText: 'Tambahkan komentar...',
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    addComment(laporan.docId);
+                  },
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Text('Tambah Komentar'),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -98,59 +155,6 @@ class _DetailPageState extends State<DetailPage> {
         title:
             Text('Detail Laporan', style: headerStyle(level: 3, dark: false)),
         centerTitle: true,
-        actions: [
-          FutureBuilder(
-            future: getLikedData(laporan.docId),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                return const Icon(
-                  Icons.error,
-                  color: Colors.red,
-                );
-              } else {
-                bool isLikedByCurrentUser = false;
-                if (snapshot.data!.isNotEmpty) {
-                  for (Like like in snapshot.data!) {
-                    if (like.uid == FirebaseAuth.instance.currentUser!.uid) {
-                      isLikedByCurrentUser = true;
-                      break;
-                    }
-                  }
-                }
-                return GestureDetector(
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: Center(
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Icon(
-                            isLikedByCurrentUser
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color:
-                                isLikedByCurrentUser ? Colors.red : Colors.grey,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  onTap: () async {
-                    await saveLikeData(laporan.docId);
-                    setState(() {});
-                  },
-                );
-              }
-            },
-          )
-        ],
       ),
       body: SafeArea(
         child: _isLoading
@@ -165,26 +169,6 @@ class _DetailPageState extends State<DetailPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      if (akun.role == 'admin')
-                        SizedBox(
-                          width: 250,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                status = laporan.status;
-                              });
-                              statusDialog(laporan);
-                            },
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: primaryColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            child: const Text('Ubah Status'),
-                          ),
-                        ),
                       Text(
                         laporan.judul,
                         style: headerStyle(level: 3),
@@ -253,6 +237,44 @@ class _DetailPageState extends State<DetailPage> {
                         child: Text(laporan.deskripsi ?? ''),
                       ),
                       const SizedBox(height: 20),
+                      if (akun.role == 'admin')
+                        SizedBox(
+                          width: 250,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                status = laporan.status;
+                              });
+                              statusDialog(laporan);
+                            },
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: primaryColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: const Text('Ubah Status'),
+                          ),
+                        ),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        width: 250,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            komentarDialog(laporan);
+                          },
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: primaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: const Text('Tambah Komentar'),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -292,25 +314,6 @@ class _DetailPageState extends State<DetailPage> {
                             },
                           ),
                           const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: TextField(
-                                  controller: commentController,
-                                  decoration: const InputDecoration(
-                                    hintText: 'Tambahkan komentar...',
-                                  ),
-                                ),
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.send),
-                                onPressed: () async {
-                                  await addComment(laporan.docId);
-                                  setState(() {});
-                                },
-                              ),
-                            ],
-                          ),
                         ],
                       ),
                     ],
@@ -336,39 +339,31 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
-  Future<void> saveLikeData(String docId) async {
+  Future<List<Komentar>> getCommentsData(String docId) async {
     try {
-      CollectionReference laporanCollection =
-          FirebaseFirestore.instance.collection('laporan');
+      QuerySnapshot commentSnapshot = await FirebaseFirestore.instance
+          .collection('laporan')
+          .doc(docId)
+          .collection('comments')
+          .orderBy('timestamp', descending: true)
+          .get();
 
-      final uid = FirebaseAuth.instance.currentUser!.uid;
+      List<Komentar> comments = commentSnapshot.docs.map((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        return Komentar(
+          nama: data['nama'] ?? '',
+          isi: data['comment'] ?? '',
+          waktu: (data['timestamp'] as Timestamp?)?.toDate() ?? DateTime.now(),
+        );
+      }).toList();
 
-      DocumentSnapshot likeDoc =
-          await laporanCollection.doc(docId).collection('likes').doc(uid).get();
-
-      String likeId = DateTime.now().toIso8601String() +
-          Random().nextInt(10000000).toString();
-
-      if (!likeDoc.exists) {
-        await laporanCollection.doc(docId).collection('likes').doc(uid).set({
-          'uid': uid,
-          'timestamp': FieldValue.serverTimestamp(),
-          'likeid': likeId
-        });
-      } else {
-        await laporanCollection
-            .doc(docId)
-            .collection('likes')
-            .doc(uid)
-            .delete();
-      }
+      return comments;
     } catch (e) {
       if (kDebugMode) {
-        print('Error saving like data: $e');
+        print('Error getting comments data: $e');
       }
+      return [];
     }
-
-    await getLikedData(docId);
   }
 
   Future<void> addComment(String docId) async {
@@ -408,58 +403,8 @@ class _DetailPageState extends State<DetailPage> {
         ),
       );
     }
-  }
 
-  Future<List<Like>> getLikedData(String docId) async {
-    try {
-      QuerySnapshot likeSnapshot = await FirebaseFirestore.instance
-          .collection('laporan')
-          .doc(docId)
-          .collection('likes')
-          .get();
-
-      List<Like> like = likeSnapshot.docs.map((doc) {
-        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-        return Like(
-          waktu: (data['timestamp'] as Timestamp?)?.toDate() ?? DateTime.now(),
-          uid: data['uid'] ?? '',
-          likeid: data['uidLaporan'] ?? '',
-        );
-      }).toList();
-
-      return like;
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error getting comments data: $e');
-      }
-      return [];
-    }
-  }
-
-  Future<List<Komentar>> getCommentsData(String docId) async {
-    try {
-      QuerySnapshot commentSnapshot = await FirebaseFirestore.instance
-          .collection('laporan')
-          .doc(docId)
-          .collection('comments')
-          .orderBy('timestamp', descending: true)
-          .get();
-
-      List<Komentar> comments = commentSnapshot.docs.map((doc) {
-        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-        return Komentar(
-          nama: data['nama'] ?? '',
-          isi: data['comment'] ?? '',
-          waktu: (data['timestamp'] as Timestamp?)?.toDate() ?? DateTime.now(),
-        );
-      }).toList();
-
-      return comments;
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error getting comments data: $e');
-      }
-      return [];
-    }
+    setState(() {});
+    Navigator.pop(context);
   }
 }

@@ -58,10 +58,6 @@ class LoginPageState extends State<LoginPage> {
                   children: [
                     const SizedBox(height: 80),
                     Text('Login', style: headerStyle(level: 2)),
-                    const Text(
-                      'Login to your account',
-                      style: TextStyle(color: Colors.grey),
-                    ),
                     const SizedBox(height: 50),
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 30),
@@ -112,12 +108,12 @@ class LoginPageState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('Belum punya akun? '),
+                        const Text('Dont have an account? '),
                         InkWell(
                           onTap: () =>
                               Navigator.pushNamed(context, '/register'),
                           child: const Text(
-                            'Daftar di sini',
+                            'Register',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
