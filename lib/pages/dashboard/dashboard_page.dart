@@ -1,26 +1,19 @@
 import 'package:bk_lapor_book/components/styles.dart';
 import 'package:bk_lapor_book/components/vars.dart';
+import 'package:bk_lapor_book/provider/provider.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DashboardPage extends StatefulWidget {
+class DashboardPage extends ConsumerWidget {
   const DashboardPage({super.key});
 
-  @override
-  State<DashboardPage> createState() => _DashboardPageState();
-}
-
-class _DashboardPageState extends State<DashboardPage> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  onItemTapped(int index, WidgetRef ref) =>
+      ref.read(currentPageProvider.notifier).update((state) => index);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentPage = ref.watch(currentPageProvider);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: primaryColor,
@@ -36,8 +29,8 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: primaryColor,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        currentIndex: currentPage,
+        onTap: (index) => onItemTapped(index, ref),
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey[800],
         items: const <BottomNavigationBarItem>[
@@ -55,7 +48,7 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
         ],
       ),
-      body: pages.elementAt(_selectedIndex),
+      body: pages.elementAt(currentPage),
     );
   }
 }

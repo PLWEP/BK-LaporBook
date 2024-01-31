@@ -16,4 +16,4 @@ final repositoryProvider = Provider(
 );
 
 final firestoreProvider = Provider((ref) => FirebaseFirestore.instance);
-final currentPageProvider = StateProvider<String?>((ref) => null);
+final currentPageProvider = StateProvider<int>((ref) => 0);
