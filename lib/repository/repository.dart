@@ -1,4 +1,5 @@
 import 'package:bk_lapor_book/common/constant.dart';
+import 'package:bk_lapor_book/models/akun.dart';
 import 'package:bk_lapor_book/models/laporan.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +17,9 @@ class Repository {
   CollectionReference get _laporanCollections =>
       _firestore.collection(Constants.laporanCollection);
 
+  CollectionReference get _akunCollections =>
+      _firestore.collection(Constants.akunCollection);
+
   Stream<List<Laporan>> getAllLaporan() => _laporanCollections.snapshots().map(
         (event) => event.docs
             .map((event) =>
@@ -32,4 +36,17 @@ class Repository {
                 Laporan.fromMap(event.data() as Map<String, dynamic>))
             .toList(),
       );
+
+  Stream<Akun> getAkunData() => _akunCollections
+      .where('uid', isEqualTo: _auth.currentUser!.uid)
+      .snapshots()
+      .map(
+        (event) => event.docs
+            .map((event) => Akun.fromMap(event.data() as Map<String, dynamic>))
+            .first,
+      );
+
+  void logOut() async {
+    await _auth.signOut();
+  }
 }
