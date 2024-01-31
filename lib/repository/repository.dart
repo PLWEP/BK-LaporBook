@@ -46,7 +46,5 @@ class Repository {
             .first,
       );
 
-  void logOut() async {
-    await _auth.signOut();
-  }
+  void logOut() async => await _auth.signOut();
 }

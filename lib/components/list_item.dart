@@ -21,11 +21,8 @@ class ListItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: InkWell(
-        onTap: () {
-          Navigator.pushNamed(context, '/detail', arguments: {
-            'laporan': laporan,
-          });
-        },
+        onTap: () => Navigator.pushNamed(context, '/detail',
+            arguments: {'laporan': laporan}),
         child: Column(
           children: [
             SizedBox(

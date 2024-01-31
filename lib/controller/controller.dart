@@ -14,5 +14,5 @@ class Controller extends StateNotifier<bool> {
   Stream<List<Laporan>> getAllLaporan() => _repository.getAllLaporan();
   Stream<List<Laporan>> getMyLaporan() => _repository.getMyLaporan();
   Stream<Akun> getAkunData() => _repository.getAkunData();
-  void logout() => _repository.logOut();
+  logout() => _repository.logOut();
 }

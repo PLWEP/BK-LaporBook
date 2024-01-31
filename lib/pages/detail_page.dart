@@ -159,9 +159,7 @@ class _DetailPageState extends State<DetailPage> {
       ),
       body: SafeArea(
         child: _isLoading
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
+            ? const Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
                 child: Container(
                   margin:
@@ -175,22 +173,10 @@ class _DetailPageState extends State<DetailPage> {
                         style: headerStyle(level: 3),
                       ),
                       const SizedBox(height: 15),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Stack(
-                              alignment: Alignment.bottomRight,
-                              children: [
-                                laporan.gambar != ''
-                                    ? Image.network(laporan.gambar!)
-                                    : Image.asset('assets/istock-default.jpg'),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 15),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
+                      laporan.gambar != ''
+                          ? Image.network(laporan.gambar!)
+                          : Image.asset('assets/istock-default.jpg'),
+                      const SizedBox(height: 15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
