@@ -1,5 +1,6 @@
+import 'package:bk_lapor_book/common/constant.dart';
 import 'package:bk_lapor_book/components/styles.dart';
-import 'package:bk_lapor_book/components/vars.dart';
+import 'package:bk_lapor_book/components/error_widget.dart';
 import 'package:bk_lapor_book/provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class DashboardPage extends ConsumerWidget {
           ),
         ],
       ),
-      body: pages.elementAt(currentPage),
+      body: Constants.pages.elementAt(currentPage),
     );
   }
 }

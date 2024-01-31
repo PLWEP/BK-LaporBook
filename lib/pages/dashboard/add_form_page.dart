@@ -2,10 +2,11 @@
 
 import 'dart:io';
 
+import 'package:bk_lapor_book/common/constant.dart';
 import 'package:bk_lapor_book/components/input_widget.dart';
 import 'package:bk_lapor_book/components/styles.dart';
 import 'package:bk_lapor_book/components/validators.dart';
-import 'package:bk_lapor_book/components/vars.dart';
+import 'package:bk_lapor_book/components/error_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -192,7 +193,7 @@ class AddFormState extends State<AddFormPage> {
                           label: 'Instansi',
                           inputField: DropdownButtonFormField<String>(
                             decoration: customInputDecoration('Instansi'),
-                            items: dataInstansi.map((e) {
+                            items: Constants.dataInstansi.map((e) {
                               return DropdownMenuItem<String>(
                                   value: e, child: Text(e));
                             }).toList(),

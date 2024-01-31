@@ -1,4 +1,6 @@
+import 'package:bk_lapor_book/components/error_widget.dart';
 import 'package:bk_lapor_book/components/list_item.dart';
+import 'package:bk_lapor_book/components/loading_widget.dart';
 
 import 'package:bk_lapor_book/provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -36,8 +38,8 @@ class AllLaporan extends ConsumerWidget {
           ),
         );
       },
-      error: (error, stackTrace) => const Center(child: Text('Error Lur')),
-      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stackTrace) => const CustomErrorWidget(),
+      loading: () => const CustomLoadingWidget(),
     );
   }
 }

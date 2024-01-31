@@ -1,4 +1,6 @@
+import 'package:bk_lapor_book/components/error_widget.dart';
 import 'package:bk_lapor_book/components/list_item.dart';
+import 'package:bk_lapor_book/components/loading_widget.dart';
 import 'package:bk_lapor_book/provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -14,7 +16,15 @@ class MyLaporan extends ConsumerWidget {
     return listLaporan.when(
       data: (data) {
         if (data.isEmpty) {
-          return const Center(child: Text('Kosong Lur'));
+          return const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.air, size: 50),
+                Text('Mohon maaf data tidak tersedia'),
+              ],
+            ),
+          );
         }
         return Container(
           width: double.infinity,
@@ -36,8 +46,8 @@ class MyLaporan extends ConsumerWidget {
           ),
         );
       },
-      error: (error, stackTrace) => const Center(child: Text('Error Lur')),
-      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stackTrace) => const CustomErrorWidget(),
+      loading: () => const CustomLoadingWidget(),
     );
   }
 }
