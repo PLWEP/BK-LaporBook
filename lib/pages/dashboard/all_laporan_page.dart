@@ -1,92 +1,43 @@
 import 'package:bk_lapor_book/components/list_item.dart';
-import 'package:bk_lapor_book/models/komentar.dart';
 
-import 'package:bk_lapor_book/models/laporan.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
+import 'package:bk_lapor_book/provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AllLaporan extends StatefulWidget {
+class AllLaporan extends ConsumerWidget {
   const AllLaporan({super.key});
 
   @override
-  State<AllLaporan> createState() => _AllLaporanState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final listLaporan = ref.watch(getAllLaporanProvider);
 
-class _AllLaporanState extends State<AllLaporan> {
-  final _firestore = FirebaseFirestore.instance;
-  List<Laporan> listLaporan = [];
-
-  void getTransaksi(context) async {
-    try {
-      QuerySnapshot<Map<String, dynamic>> querySnapshot =
-          await _firestore.collection('laporan').get();
-
-      setState(() {
-        listLaporan.clear();
-        for (var documents in querySnapshot.docs) {
-          List<dynamic>? komentarData = documents.data()['komentar'];
-
-          List<Komentar>? listKomentar = komentarData?.map((map) {
-            return Komentar(
-              nama: map['nama'],
-              isi: map['isi'],
-              waktu: map['wakut'],
-            );
-          }).toList();
-
-          listLaporan.add(
-            Laporan(
-              uid: documents.data()['uid'],
-              docId: documents.data()['docId'],
-              judul: documents.data()['judul'],
-              instansi: documents.data()['instansi'],
-              deskripsi: documents.data()['deskripsi'],
-              nama: documents.data()['nama'],
-              status: documents.data()['status'],
-              gambar: documents.data()['gambar'],
-              tanggal: documents['tanggal'].toDate(),
-              maps: documents.data()['maps'],
-              komentar: listKomentar,
-            ),
-          );
+    return listLaporan.when(
+      data: (data) {
+        if (data.isEmpty) {
+          return const Center(child: Text('Kosong Lur'));
         }
-      });
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    listLaporan;
-    _firestore;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    getTransaksi(context);
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          childAspectRatio: 1 / 1.234,
-        ),
-        itemCount: listLaporan.length,
-        itemBuilder: (context, index) {
-          return ListItem(
-            laporan: listLaporan[index],
-            isLaporanku: false,
-          );
-        },
-      ),
+        return Container(
+          width: double.infinity,
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              childAspectRatio: 1 / 1.234,
+            ),
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              return ListItem(
+                laporan: data[index],
+                isLaporanku: false,
+              );
+            },
+          ),
+        );
+      },
+      error: (error, stackTrace) => const Center(child: Text('Error Lur')),
+      loading: () => const Center(child: CircularProgressIndicator()),
     );
   }
 }

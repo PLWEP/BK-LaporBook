@@ -66,7 +66,7 @@ class Laporan {
       gambar: map['gambar'] != null ? map['gambar'] as String : null,
       nama: map['nama'] as String,
       status: map['status'] as String,
-      tanggal: DateTime.fromMillisecondsSinceEpoch(map['tanggal'] as int),
+      tanggal: map['tanggal'].toDate() as DateTime,
       maps: map['maps'] as String,
       komentar: map['komentar'] != null
           ? List<Komentar>.from(
