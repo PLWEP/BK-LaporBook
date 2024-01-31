@@ -8,6 +8,7 @@ import 'package:bk_lapor_book/pages/register_page.dart';
 import 'package:bk_lapor_book/pages/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,19 +17,21 @@ void main() async {
   );
 
   runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Lapor Book',
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const SplashPage(),
-        '/login': (context) => const LoginPage(),
-        '/register': (context) => const RegisterPage(),
-        '/dashboard': (context) => const DashboardPage(),
-        '/add': (context) => const AddFormPage(),
-        '/detail': (context) => const DetailPage(),
-        '/notconnect': (context) => const NotConnectPage(),
-      },
+    ProviderScope(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Lapor Book',
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const SplashPage(),
+          '/login': (context) => const LoginPage(),
+          '/register': (context) => const RegisterPage(),
+          '/dashboard': (context) => const DashboardPage(),
+          '/add': (context) => const AddFormPage(),
+          '/detail': (context) => const DetailPage(),
+          '/notconnect': (context) => const NotConnectPage(),
+        },
+      ),
     ),
   );
 }
