@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:bk_lapor_book/components/status_dialog.dart';
 import 'package:bk_lapor_book/components/styles.dart';
 import 'package:bk_lapor_book/models/akun.dart';
+import 'package:bk_lapor_book/models/komentar.dart';
 import 'package:bk_lapor_book/models/laporan.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

@@ -1,4 +1,5 @@
 import 'package:bk_lapor_book/components/list_item.dart';
+import 'package:bk_lapor_book/models/komentar.dart';
 
 import 'package:bk_lapor_book/models/laporan.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
