@@ -11,4 +11,5 @@ class Controller extends StateNotifier<bool> {
         super(false);
 
   Stream<List<Laporan>> getAllLaporan() => _repository.getAllLaporan();
+  Stream<List<Laporan>> getMyLaporan() => _repository.getMyLaporan();
 }
